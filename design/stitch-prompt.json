@@ -1,0 +1,522 @@
+{
+  "_about": {
+    "purpose": "Design specification for the Egg Rides ride-sharing coordination app. Designed to be pasted into Google Stitch (https://stitch.withgoogle.com/) or any other prompt-driven UI generator. Mirrors the live React app under /src so generated designs stay consistent with the codebase.",
+    "how_to_use": [
+      "Option A (full app): Paste the entire JSON into Stitch's prompt box prefixed with `_suggested_intro` below. Ask for all five screens.",
+      "Option B (one screen at a time): Copy `_suggested_intro` + the single `screens[i]` block you want. Useful for iterating on one layout.",
+      "Option C (extract tokens only): Hand `design_tokens` to a designer/dev as the shared style spec."
+    ],
+    "version": "1.0"
+  },
+
+  "_suggested_intro": "Design the screens of a friendly, beginner-friendly web app called Egg Rides. It coordinates informal ride-shares (think: airport runs, group trips) without accounts or a backend — everything is local. Match the design tokens, layout, and copy in the JSON below exactly. Visual personality: an egg yolk in a soft leafy-green field — warm cream backgrounds, leafy-green primary actions, egg-yolk-yellow accents, generous rounded corners, soft shadows, restful whitespace. Target device: responsive web, optimised for mobile-first but readable on desktop. Avoid: heavy gradients, dark mode, complex iconography, marketing-style hero imagery.",
+
+  "meta": {
+    "name": "Egg Rides",
+    "emoji": "🥚",
+    "tagline": "Share rides with people heading the same way, around the same time.",
+    "description": "A tiny ride-sharing coordination app. The user posts a ride (name, pickup, destination, date, time, notes). The app shows them matching groups and people before they commit, then they explicitly choose to request to join an existing group or post their own group. No login, no payments, no backend.",
+    "primary_audience": "Small social or work circles coordinating airport runs, conference trips, or weekend events.",
+    "tone": "casual, optimistic, plain-language, beginner-friendly",
+    "platform": "responsive web (Chrome/Safari/Firefox); mobile-first"
+  },
+
+  "design_tokens": {
+    "color": {
+      "background": "#fafaf6",
+      "surface": "#ffffff",
+      "border": "#e7e3d7",
+      "text": "#1f1d18",
+      "text_dim": "#6b675b",
+      "accent": "#f5b400",
+      "accent_dark": "#c98c00",
+      "primary": "#2a6f50",
+      "primary_dark": "#1f5a40",
+      "danger": "#c14b3a",
+      "flash_bg": "#fff8e1",
+      "flash_border": "#f5d57a",
+      "flash_text": "#6c5200",
+      "map_pickup_pin": "#2a6f50",
+      "map_destination_pin": "#f5b400"
+    },
+    "typography": {
+      "font_family": "system-ui (San Francisco, Segoe UI, Roboto)",
+      "h1": "2rem / 700",
+      "h2": "1.1rem / 600",
+      "h3": "1rem / 600",
+      "body": "1rem / 400 / line-height 1.5",
+      "small": "0.9rem",
+      "smaller": "0.85rem",
+      "label": "0.9rem / 500 / color text_dim",
+      "section_header": "0.85rem / 600 / uppercase / letter-spacing 0.08em / color text_dim"
+    },
+    "spacing": {
+      "page_max_width": "720px",
+      "page_padding": "32px 20px 80px",
+      "card_padding": "20px",
+      "row_gap": "14px",
+      "two_col_gap": "12px"
+    },
+    "radius": {
+      "card": "14px",
+      "input": "8px",
+      "button": "8px",
+      "pill": "999px",
+      "modal": "16px",
+      "bubble": "14px"
+    },
+    "shadow": {
+      "card": "0 1px 3px rgba(31,29,24,0.06), 0 8px 24px rgba(31,29,24,0.04)",
+      "modal": "0 16px 40px rgba(0,0,0,0.25)"
+    },
+    "responsive_breakpoint": "520px"
+  },
+
+  "components": {
+    "card": {
+      "background": "surface",
+      "border": "1px solid border",
+      "radius": "card",
+      "padding": "card_padding",
+      "shadow": "card",
+      "margin_bottom": "20px"
+    },
+    "button_primary": {
+      "background": "primary",
+      "text_color": "white",
+      "padding": "10px 18px",
+      "radius": "button",
+      "weight": 600,
+      "hover": "background: primary_dark"
+    },
+    "button_ghost": {
+      "background": "transparent",
+      "text_color": "text_dim",
+      "border": "1px solid border",
+      "padding": "8px 14px",
+      "radius": "button",
+      "hover": "background: background, text_color: text"
+    },
+    "link_button": {
+      "background": "transparent",
+      "text_color": "primary",
+      "padding": 0,
+      "weight": 500,
+      "hover": "underline"
+    },
+    "text_input": {
+      "padding": "9px 11px",
+      "background": "background",
+      "border": "1px solid border",
+      "radius": "input",
+      "focus": "border: accent, background: white"
+    },
+    "tabs": {
+      "container": "flex row with 1px bottom border in `border`",
+      "tab": "padding 10px 16px, weight 600, color text_dim, 2px transparent bottom border, margin-bottom -1px",
+      "active_tab": "color text, bottom border 2px in accent",
+      "hover_inactive": "color text"
+    },
+    "pending_badge": {
+      "background": "#fff3cd",
+      "text_color": "#6c5200",
+      "padding": "1px 8px",
+      "radius": "pill",
+      "size": "0.8rem / 600"
+    },
+    "flash_banner": {
+      "background": "flash_bg",
+      "border": "1px solid flash_border",
+      "text_color": "flash_text",
+      "padding": "12px 16px",
+      "radius": "10px",
+      "behavior": "auto-dismiss after 5s"
+    },
+    "map_placeholder": {
+      "description": "Used when Google Maps is not configured OR when pickup/destination coords are not yet set.",
+      "background": "linear-gradient(135deg, #fff8e1 0%, #fffae6 100%)",
+      "border": "1px solid #f0e4b8",
+      "icon": "🗺",
+      "icon_size": "2rem",
+      "copy": {
+        "no_api_key": {
+          "title": "Map preview disabled",
+          "body": "Set VITE_GOOGLE_MAPS_API_KEY in .env.local to enable Google Maps + Places autocomplete."
+        },
+        "no_coords": {
+          "title": "Map preview",
+          "body": "Pick a pickup and destination from the suggestions to see them here."
+        }
+      }
+    },
+    "map_live": {
+      "description": "Live Google Map when API key + coordinates are present.",
+      "height": "220px",
+      "radius": "card",
+      "markers": [
+        { "label": "Pickup", "background": "map_pickup_pin", "border": "primary_dark", "glyph_color": "#fff" },
+        { "label": "Destination", "background": "map_destination_pin", "border": "accent_dark", "glyph_color": "text" }
+      ],
+      "behavior": "auto-fit bounds when both markers present; otherwise center on the single marker at zoom 14"
+    }
+  },
+
+  "screens": [
+    {
+      "id": "home",
+      "title": "Home — post a ride and browse existing groups",
+      "purpose": "Entry point. Either fill the form to find matches, or click an existing group to view its members.",
+      "layout": "vertical stack, centered, max-width 720px, page_padding",
+      "blocks": [
+        {
+          "block": "header",
+          "alignment": "center",
+          "margin_bottom": "28px",
+          "h1": "🥚 Egg Rides",
+          "subtitle": "Share rides with people heading the same way, around the same time."
+        },
+        {
+          "block": "ride_form_card",
+          "uses": "card",
+          "content": {
+            "h2": "Post a ride",
+            "hint": "We'll show you matching groups and individuals before you commit.",
+            "fields": [
+              { "label": "Your name", "type": "text_input", "placeholder": "Alex" },
+              {
+                "label": "Pickup area",
+                "type": "places_autocomplete (or plain text_input fallback)",
+                "placeholder": "Start typing an address…",
+                "below": {
+                  "type": "link_button",
+                  "text": "📍 Use my current location",
+                  "loading_state": "📍 Locating…",
+                  "error_state": "inline danger-colored message to the right"
+                }
+              },
+              {
+                "label": "Destination",
+                "type": "places_autocomplete (or plain text_input fallback)",
+                "placeholder": "Start typing an address…"
+              }
+            ],
+            "map_preview": "Embed map_live OR map_placeholder between Destination and Date row",
+            "date_time_row": {
+              "layout": "two-column grid, two_col_gap, stacks on mobile",
+              "fields": [
+                { "label": "Date", "type": "date input" },
+                { "label": "Departure time", "type": "time input" }
+              ]
+            },
+            "notes_field": {
+              "label": "Notes (optional)",
+              "type": "textarea",
+              "min_height": "70px",
+              "placeholder": "Two suitcases, happy to split parking"
+            },
+            "error_state": "Inline pill in danger color, e.g. 'Please fill in name, pickup, destination, date, and time.'",
+            "submit_button": { "style": "primary", "text": "Find my group" }
+          }
+        },
+        {
+          "block": "existing_groups_list",
+          "header": {
+            "text": "Existing ride groups",
+            "style": "section_header",
+            "margin": "28px 0 12px"
+          },
+          "empty_state": {
+            "uses": "card",
+            "alignment": "center",
+            "h2": "No rides yet 🥚",
+            "body": "Post one above — fill out your trip and we'll show you matching groups and people before you commit."
+          },
+          "card": {
+            "uses": "card",
+            "padding": "16px 18px",
+            "hover": "border-color: accent, slight transform translateY(-1px)",
+            "title": "{pickup} → {destination}  (with accent-dark colored arrow)",
+            "meta_row": [
+              "👥 {member_count} people",
+              "🗓 {date_short}",
+              "⏰ around {avg_time}",
+              "{pending_badge if pending > 0}"
+            ],
+            "click_action": "navigate to group_detail screen"
+          }
+        }
+      ]
+    },
+
+    {
+      "id": "results",
+      "title": "Results — matching groups and people for the user's draft ride",
+      "purpose": "After the user submits the form, show what matches their trip and let them choose: join an existing group, message someone, invite someone, or post their own.",
+      "entry": "Clicking 'Find my group' on the home form (with valid input).",
+      "blocks": [
+        {
+          "block": "back_link",
+          "type": "link_button",
+          "text": "← Back to form",
+          "note": "Discards draft but keeps form values."
+        },
+        {
+          "block": "summary_card",
+          "uses": "card",
+          "label": "LOOKING FOR MATCHES (section_header style)",
+          "content_template": "**{name}** · {pickup} → {destination}\n🗓 {date_long} · ⏰ {time}"
+        },
+        {
+          "block": "map_preview",
+          "uses": "map_live or map_placeholder",
+          "props": "pickup={draft.pickupCoords}, destination={draft.destinationCoords}"
+        },
+        {
+          "block": "tabs",
+          "items": [
+            { "id": "groups", "label": "Groups ({matching_count})" },
+            { "id": "people", "label": "People ({matching_count})" }
+          ]
+        },
+        {
+          "block": "tab_panel_groups",
+          "empty_state": "No matching groups yet. Post your ride below and others heading the same way can request to join.",
+          "card": {
+            "uses": "card",
+            "padding": "16px 18px",
+            "title": "{pickup} → {destination} (with accent-dark colored arrow)",
+            "meta_row": [
+              "👥 {member_count} people",
+              "🗓 {date_short}",
+              "⏰ around {avg_time}",
+              "{pending_badge if pending > 0}"
+            ],
+            "actions": [
+              { "style": "primary", "text": "Request to join" },
+              { "style": "ghost", "text": "Message group" }
+            ],
+            "mobile_actions": "stack vertically, full-width"
+          }
+        },
+        {
+          "block": "tab_panel_people",
+          "empty_state": "No one else is heading toward \"{destination}\" yet. Post your ride to be the first.",
+          "card": {
+            "uses": "card",
+            "padding": "16px 18px",
+            "title": "{name}",
+            "meta_primary": "📍 {pickup} → {destination}",
+            "meta_secondary": ["🗓 {date_short}", "⏰ {time}", "{pending_badge if status==pending}"],
+            "note": "(only if notes present) \"{notes}\" — italic, text_dim, 0.9rem",
+            "actions": [
+              { "style": "ghost", "text": "Message" },
+              { "style": "primary", "text": "Invite to group" }
+            ],
+            "mobile_actions": "stack vertically, full-width"
+          }
+        },
+        {
+          "block": "footer_card",
+          "uses": "card",
+          "alignment": "center",
+          "content": "None of these look right?",
+          "button": { "style": "primary", "text": "Post my ride as a new group" }
+        }
+      ]
+    },
+
+    {
+      "id": "group_detail",
+      "title": "Group Detail — members, pending join requests, manage",
+      "entry": "Click any group card on the home page.",
+      "blocks": [
+        {
+          "block": "back_link",
+          "type": "link_button",
+          "text": "← Back to all groups"
+        },
+        {
+          "block": "header",
+          "h2": "{pickup} → {destination}",
+          "meta": "🗓 {date_long} · ⏰ leaving around {time}",
+          "meta_color": "text_dim",
+          "meta_margin_bottom": "16px"
+        },
+        {
+          "block": "section_members",
+          "h3": "In the group ({confirmed_count})",
+          "empty_state": "No confirmed members yet — approve a pending request below to start the group.",
+          "list_item": {
+            "container": "padding 12px, background background, border 1px border, radius 10px, margin-bottom 8px",
+            "layout": "horizontal flex with space-between (stacks vertically on mobile)",
+            "left": {
+              "name": "**{name}** (bold)",
+              "sub": "leaving {time} from {pickup}  (0.9rem text_dim)",
+              "notes": "(if present) \"{notes}\"  (italic 0.9rem text_dim)"
+            },
+            "right": {
+              "button": { "style": "ghost", "text": "Remove", "title_attr": "Remove this person from the group" }
+            }
+          }
+        },
+        {
+          "block": "section_pending",
+          "shown_when": "pending_count > 0",
+          "h3": "Pending join requests ({pending_count})",
+          "list_item": {
+            "container": "same as members list_item container",
+            "left": "same as members left",
+            "right": {
+              "buttons": [
+                { "style": "primary", "text": "Approve" },
+                { "style": "ghost", "text": "Decline" }
+              ],
+              "mobile_actions": "full width, stack"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "id": "message_modal",
+      "title": "Message Modal — mock chat with a person or a group",
+      "type": "modal_overlay",
+      "trigger": "Click 'Message' or 'Message group' or 'Invite to group' on a Results card",
+      "backdrop": {
+        "color": "rgba(31,29,24,0.45)",
+        "behavior": "centered modal; click outside or Escape key dismisses; fade-in 0.12s",
+        "z_index": 100,
+        "padding": "16px"
+      },
+      "modal": {
+        "background": "surface",
+        "max_width": "480px",
+        "max_height": "min(640px, 100%)",
+        "radius": "modal",
+        "shadow": "modal",
+        "overflow": "hidden",
+        "layout": "vertical flex: header / thread / compose",
+        "sections": [
+          {
+            "name": "header",
+            "border_bottom": "1px solid border",
+            "padding": "14px 16px",
+            "layout": "space-between flex",
+            "title_label": {
+              "text": "MESSAGE  or  MESSAGE GROUP",
+              "style": "0.75rem, weight 700, uppercase, letter-spacing 0.08em, color text_dim"
+            },
+            "subtitle": {
+              "text": "{recipient_name}  or  '{pickup} → {destination}' for group",
+              "style": "1.1rem, weight 600, color text, word-break: break-word"
+            },
+            "close_button": {
+              "char": "×",
+              "size": "1.8rem",
+              "color": "text_dim",
+              "hover_color": "text",
+              "padding": "0 4px",
+              "aria_label": "Close"
+            }
+          },
+          {
+            "name": "thread",
+            "background": "background",
+            "padding": "12px 16px",
+            "min_height": "200px",
+            "scrollable": true,
+            "gap_between_bubbles": "8px",
+            "empty_state": "No messages yet. This is a mock chat — your messages save locally on this device.  (centered, text_dim, 40px top margin)",
+            "auto_scroll": "to bottom on new message",
+            "bubble_mine": {
+              "alignment": "right (align-self flex-end)",
+              "background": "primary",
+              "text_color": "white",
+              "border": "1px solid primary",
+              "max_width": "80%",
+              "padding": "8px 12px",
+              "radius": "bubble",
+              "metadata_above": "0.7rem from-name in rgba(255,255,255,0.75)",
+              "metadata_below": "0.65rem time in rgba(255,255,255,0.65)"
+            },
+            "bubble_theirs": {
+              "alignment": "left (align-self flex-start)",
+              "background": "surface",
+              "text_color": "text",
+              "border": "1px solid border",
+              "max_width": "80%",
+              "padding": "8px 12px",
+              "radius": "bubble",
+              "metadata_above": "0.7rem from-name in text_dim",
+              "metadata_below": "0.65rem time in text_dim"
+            },
+            "note": "In current mock, only 'mine' bubbles will appear (since the recipient never replies)."
+          },
+          {
+            "name": "compose",
+            "background": "surface",
+            "border_top": "1px solid border",
+            "padding": "12px 16px",
+            "layout": "horizontal flex, align-items flex-end, gap 8px (stacks on mobile)",
+            "textarea": {
+              "placeholder": "Type a message…  (Enter to send, Shift+Enter for newline)",
+              "rows": 2,
+              "min_height": "38px",
+              "resize": "none",
+              "background": "background",
+              "border": "1px solid border",
+              "radius": "input",
+              "focus": "border accent, background surface"
+            },
+            "send_button": { "style": "primary", "text": "Send" },
+            "mobile_send": "full width below textarea"
+          }
+        ]
+      }
+    }
+  ],
+
+  "interactions": {
+    "submit_form": "Validate required fields → enter Results view with current form values as 'draft' (not yet committed).",
+    "back_to_form": "Discard draft, keep typed form values, return to Home.",
+    "request_to_join_group": "Commit draft as pending member of selected group, return to Home with success flash.",
+    "post_my_ride_as_new_group": "Commit draft as confirmed member of a new group of one, return to Home with success flash.",
+    "message_person": "Open MessageModal targeted at the person card; draft user is sender.",
+    "message_group": "Open MessageModal targeted at the group card; draft user is sender.",
+    "invite_to_group": "Open MessageModal with prefilled text: \"Hey {name}, I'm heading to {destination} from {pickup} around {time}. Want to share a ride?\"",
+    "approve_pending_member": "Flip the pending ride's status to confirmed.",
+    "decline_pending_member": "Remove the ride from store entirely.",
+    "remove_member": "Remove the ride from store entirely.",
+    "use_my_current_location": "Browser Geolocation API → reverse-geocode via Google Geocoding API → fill pickup label and capture lat/lng.",
+    "places_autocomplete": "Google Places Autocomplete → on suggestion pick, fill input text and capture lat/lng.  Typing manually clears stored coords."
+  },
+
+  "flashes": {
+    "purpose": "Brief, dismissible info banner at the top of the page after key actions.",
+    "uses": "flash_banner component",
+    "examples": [
+      "Posted! You're the first in your group — others can request to join.",
+      "Join request sent. When someone in the {pickup} → {destination} group approves, you're in."
+    ]
+  },
+
+  "footer": {
+    "alignment": "center",
+    "color": "text_dim",
+    "size": "0.85rem",
+    "margin_top": "28px",
+    "text": "Data lives in this browser only. Clearing site data will erase all rides and messages."
+  },
+
+  "responsive": {
+    "breakpoint": "520px",
+    "mobile_changes": [
+      "Form two-column rows (Date/Time) stack vertically.",
+      "Result card action buttons stack vertically and fill full width.",
+      "Group detail list items stack name and action buttons vertically.",
+      "Modal compose row stacks textarea above a full-width send button.",
+      "All cards expand to fill horizontal padding."
+    ]
+  }
+}
