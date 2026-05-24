@@ -1,6 +1,6 @@
 # 🥚 Egg Rides
 
-A tiny ride-sharing **coordination** app. Tell the app where you're starting, where you're going, and when you want to leave — it shows you matching groups and people, then you choose to request to join or start your own group.
+A tiny ride-sharing **coordination** app. Tell the app where you're starting, where you're going, and when you want to leave. It shows you matching groups and people, then you choose to request to join or start your own group.
 
 No accounts, no backend, **no API keys** — everything runs in your browser. Maps come from OpenStreetMap, autocomplete from Nominatim, and the route line from OSRM.
 
